@@ -16,5 +16,9 @@ namespace MyEvernote.DataAccessLayer
         public DbSet<Category> Categories { get; set; }
         public DbSet<Liked> Likes { get; set; }
 
+        public DatabaseContext()
+        {
+            Database.SetInitializer(new MyInitializer());
+        }
     }
 }

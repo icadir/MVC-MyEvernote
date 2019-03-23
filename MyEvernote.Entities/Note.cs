@@ -11,7 +11,7 @@ namespace MyEvernote.Entities
     [Table("Notes")]
     public class Note : MyEntityBase
     {
-        [Required,StringLength(60)]
+        [Required, StringLength(60)]
         public string Title { get; set; }
 
         [Required, StringLength(2000)]
@@ -27,7 +27,12 @@ namespace MyEvernote.Entities
         public virtual List<Comment> Comments { get; set; }
         public virtual Category Category { get; set; }
         public virtual List<Liked> Likes { get; set; }
-       
+
+        public Note()
+        {
+            Comments = new List<Comment>();
+            Likes = new List<Liked>();
+        }
 
     }
 }

@@ -12,7 +12,7 @@ namespace MyEvernote.BusinessLayer
         public Test()
         {
             DataAccessLayer.DatabaseContext db = new DatabaseContext();
-            db.Database.CreateIfNotExists();
+            db.Categories.ToList();
         }
     }
 }
