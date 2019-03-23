@@ -22,13 +22,13 @@ body {
 }
 
 .caption {
-    height: 130px;
+    height: 155px;
     overflow: hidden;
 }
 
-.caption h4 {
-    white-space: nowrap;
-}
+    .caption h4 {
+        white-space: nowrap;
+    }
 
 .thumbnail img {
     width: 100%;
@@ -40,15 +40,28 @@ body {
     color: #d17581;
 }
 
+    .ratings button {
+        color: #d17581;
+    }
+
+        .ratings button:hover {
+            color: #ac5460;
+        }
+
 .thumbnail {
-    padding: 0;
+    height: 340px;
 }
 
-.thumbnail .caption-full {
-    padding: 9px;
-    color: #333;
-}
+    .thumbnail .caption-full {
+        padding: 9px;
+        color: #333;
+    }
 
 footer {
     margin: 50px 0;
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
