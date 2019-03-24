@@ -6,7 +6,20 @@
 
 <link href="~/Content/login-register.css" rel="stylesheet" />
 
-@using (Html.BeginForm("Register", "Home",FormMethod.Post))
+<style>
+    .validation-summary-errors {
+        border: 2px dotted #a94442;
+        background-color: #d76663;
+        border-radius: 8px;
+    }
+
+        .validation-summary-errors ul {
+            list-style-type: none;
+            padding: 10px;
+            color: #fff;
+        }
+</style>
+@using (Html.BeginForm("Register", "Home", FormMethod.Post))
 {
     <section class="login-info">
         <div class="container">
@@ -15,6 +28,8 @@
                     <h1 class="text-center ">Kayıt Formu </h1>
                 </div>
                 <div class="main-content">
+
+                    @Html.ValidationSummary(false)
 
                     <div class="input-group ">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>

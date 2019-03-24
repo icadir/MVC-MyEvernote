@@ -73,10 +73,42 @@ namespace MyEvernote.WebApp.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
+
             // kuallnıcı username kontroşü
             // kllancı e-posta kontrolü
             // kayit işlemi 
             // aktivasyon e-postası gönderimi
+            if (ModelState.IsValid)
+            {
+
+                // ileride mobil vs gelebilir bu kodları mobil vsde kullanamayız bu yüzden bunları BLL'e taşımamız gerekiyor.
+                //if (model.Username == "aaa")
+                //{
+                //    ModelState.AddModelError("", "Kullanıcı Adı Kullanılıyor");
+
+                //}
+                //if (model.Email == "aaa@aa.com")
+                //{
+                //    ModelState.AddModelError("", "E-posta adresi kullanılıyor");
+
+                //}
+
+                //foreach (var item in ModelState)
+                //{
+                //    if (item.Value.Errors.Count > 0)
+                //    {
+                //        return View(model);
+                //    }
+                //}
+
+                return RedirectToAction("RegisterOk");
+            }
+           
+            return View(model);
+        }
+
+        public ActionResult RegisterOk()
+        {
             return View();
         }
 
