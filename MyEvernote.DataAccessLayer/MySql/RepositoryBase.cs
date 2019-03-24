@@ -15,6 +15,7 @@ namespace MyEvernote.DataAccessLayer.MySql
         {
             CreateContext();
         }
+
         private static void CreateContext()
         {
             if (context == null)
@@ -30,4 +31,5 @@ namespace MyEvernote.DataAccessLayer.MySql
 
             }
         }
+    }
 }
