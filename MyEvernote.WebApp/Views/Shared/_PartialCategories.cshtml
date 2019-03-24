@@ -11,7 +11,7 @@
 
     @foreach (Category cat in list)
     {
-        <a href="/Category/Select/@cat.Id" title="@cat.Description" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span>@cat.Title</a>
+        <a href="/Home/ByCategory/@cat.Id" title="@cat.Description" class="list-group-item"><span class="glyphicon glyphicon-arrow-right"></span>@cat.Title</a>
     }
 </div>
 

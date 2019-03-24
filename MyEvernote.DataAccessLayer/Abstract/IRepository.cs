@@ -14,6 +14,7 @@ namespace MyEvernote.DataAccessLayer.Abstract
          int Insert(T obj);
          int Update(T obj);
          int Delete(T obj);
+         IQueryable<T> ListQueryable();
          int Save();
          T Find(Expression<Func<T, bool>> where);
 

@@ -7,7 +7,7 @@ using MyEvernote.DataAccessLayer.Abstract;
 
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
-    public class Repository<T> : RepositoryBase,IRepository<T> where T : class
+    public class Repository<T> : RepositoryBase, IRepository<T> where T : class
     {
 
         private DbSet<T> _objectSet;
@@ -22,7 +22,10 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
         {
             return _objectSet.ToList();
         }
-
+        public IQueryable<T> ListQueryable()
+        {
+            return _objectSet.AsQueryable<T>();
+        }
         public List<T> List(Expression<Func<T, bool>> where)
         {
             return _objectSet.Where(where).ToList();
