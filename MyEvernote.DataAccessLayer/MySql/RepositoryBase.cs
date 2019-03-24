@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyEvernote.DataAccessLayer;
 
-namespace MyEvernote.BusinessLayer
+namespace MyEvernote.DataAccessLayer.MySql
 {
     public class RepositoryBase
     {
-        protected static DatabaseContext context;
+        protected static object context;
         private static object _lockSync = new object();
 
         protected RepositoryBase()
@@ -24,13 +23,11 @@ namespace MyEvernote.BusinessLayer
                 {
                     if (context == null)
                     {
-                        context = new DatabaseContext();
+                        context = new object();
                     }
 
                 }
 
             }
-
         }
-    }
 }

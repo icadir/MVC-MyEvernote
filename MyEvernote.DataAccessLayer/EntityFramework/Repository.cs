@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using MyEvernote.DataAccessLayer.Abstract;
 
-namespace MyEvernote.BusinessLayer
+namespace MyEvernote.DataAccessLayer.EntityFramework
 {
-    public class Repository<T> : RepositoryBase where T : class
+    public class Repository<T> : RepositoryBase,IRepository<T> where T : class
     {
 
         private DbSet<T> _objectSet;
@@ -16,8 +17,6 @@ namespace MyEvernote.BusinessLayer
 
             _objectSet = context.Set<T>();
         }
-
-
 
         public List<T> List()
         {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyEvernote.Entities;
 
-namespace MyEvernote.DataAccessLayer
+namespace MyEvernote.DataAccessLayer.EntityFramework
 {
     //katılım alınına createdatabaseIfnoexists database yoksa olustur demek ve olustururken seed methodunu ezerek calısma anında fake daha ekliyoruz.
     public class MyInitializer : CreateDatabaseIfNotExists<DatabaseContext>
