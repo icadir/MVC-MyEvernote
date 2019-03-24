@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
-using MyEvernote.WebApp.ViewModels;
+using MyEvernote.Entities.ValueObjects;
 
 namespace MyEvernote.WebApp.Controllers
 {
@@ -80,6 +80,26 @@ namespace MyEvernote.WebApp.Controllers
             // aktivasyon e-postası gönderimi
             if (ModelState.IsValid)
             {
+                EvernotUserManager eum = new EvernotUserManager();
+                var res = eum.RegisterUser(model);
+
+                if (res.Erros.Count > 0)
+                {
+                    res.Erros.ForEach(x => ModelState.AddModelError("", x));
+                    return View(model);
+                }
+                
+                //EvernoteUser user = null;
+                //try
+                //{
+                //    user = eum.RegisterUser(model);
+                //}
+                //catch (Exception ex)
+                //{
+                //    ModelState.AddModelError("", ex.Message);
+
+                //}
+
 
                 // ileride mobil vs gelebilir bu kodları mobil vsde kullanamayız bu yüzden bunları BLL'e taşımamız gerekiyor.
                 //if (model.Username == "aaa")
@@ -101,9 +121,13 @@ namespace MyEvernote.WebApp.Controllers
                 //    }
                 //}
 
+                //if (user == null)
+                //{
+                //    return View(model);
+                //}
                 return RedirectToAction("RegisterOk");
             }
-           
+
             return View(model);
         }
 

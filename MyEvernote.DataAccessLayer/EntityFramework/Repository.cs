@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using MyEvernote.DataAccessLayer.Abstract;
+using MyEvernote.Entities;
 
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
@@ -35,16 +36,38 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
         {
 
             _objectSet.Add(obj);
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                DateTime now = DateTime.Now;
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUsername = "system";//TODO işlem yapan kullanıcı adı yazılması..
+            }
             return Save();
         }
 
         public int Update(T obj)
         {
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+               
+                o.ModifiedOn = DateTime.Now;
+                o.ModifiedUsername = "system";//TODO işlem yapan kullanıcı adı yazılması..
+            }
             return Save();
         }
 
         public int Delete(T obj)
         {
+            //if (obj is MyEntityBase)
+            //{
+            //    MyEntityBase o = obj as MyEntityBase;
+
+            //    o.ModifiedOn = DateTime.Now;
+            //    o.ModifiedUsername = "system";//TODO işlem yapan kullanıcı adı yazılması..
+            //}
             _objectSet.Remove(obj);
             return Save();
         }
