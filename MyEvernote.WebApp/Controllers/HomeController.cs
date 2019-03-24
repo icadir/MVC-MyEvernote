@@ -61,6 +61,8 @@ namespace MyEvernote.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
+            //Giriş kontrolü ve yönlendirme 
+            //session akullanıcı bilgi saklama
             return View();
         }
 
@@ -68,7 +70,21 @@ namespace MyEvernote.WebApp.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            // kuallnıcı username kontroşü
+            // kllancı e-posta kontrolü
+            // kayit işlemi 
+            // aktivasyon e-postası gönderimi
+            return View();
+        }
 
+        public ActionResult UserActivate(Guid activate_id)
+        {
+            // Kullanıcı aktivasyonu sağlanacak.
+            return View();
+        }
         public ActionResult Logout()
         {
             return View();

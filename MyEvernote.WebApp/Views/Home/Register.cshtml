@@ -1,12 +1,12 @@
 ﻿@using MyEvernote.WebApp.ViewModels
-@model LoginViewModel
+@model RegisterViewModel
 @{
     ViewBag.Title = "MyEvernote - Kayıt Sayfası";
 }
 
 <link href="~/Content/login-register.css" rel="stylesheet" />
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Register", "Home",FormMethod.Post))
 {
     <section class="login-info">
         <div class="container">
@@ -21,13 +21,24 @@
 
                         @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Kullanıcı Adınız" })
                     </div>
+
+                    <div class="input-group ">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "E-posta Adresiniz" })
+                    </div>
+
                     <div class="input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
                         @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Şifreniz", type = "password" })
                     </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(model => model.RePassword, new { @class = "form-control", placeholder = "Şifreniz tekrar", type = "password" })
+                    </div>
 
                     <div class="form-group ">
-                        <button href="#" type="submit" class="btn btn-danger btn-lg btn-block login-button">Giriş</button>
+                        <button href="#" type="submit" class="btn btn-danger btn-lg btn-block login-button">Kayıt</button>
                     </div>
 
                 </div>
