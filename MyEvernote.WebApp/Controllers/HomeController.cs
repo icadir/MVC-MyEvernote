@@ -12,8 +12,9 @@ namespace MyEvernote.WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-          
-            return View();
+            NoteManager nm = new NoteManager();
+
+            return View(nm.GetAllNote());
         }
     }
 }
