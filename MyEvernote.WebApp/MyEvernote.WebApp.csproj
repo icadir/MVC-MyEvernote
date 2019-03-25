@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,10 @@
     <ProjectReference Include="..\MyEvernote.Entities\MyEvernote.Entities.csproj">
       <Project>{5778fa34-8b56-41e2-aede-7755b4810ee7}</Project>
       <Name>MyEvernote.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyEvernoteCommon\MyEvernoteCommon.csproj">
+      <Project>{79ae90c7-5c3f-4a36-b205-90af89d4490d}</Project>
+      <Name>MyEvernoteCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
