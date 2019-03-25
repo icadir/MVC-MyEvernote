@@ -18,6 +18,12 @@
                     <h1 class="text-center ">Giriş Formu </h1>
                 </div>
                 <div class="main-content">
+                    
+                    @Html.ValidationSummary(false)
+                    @if (ViewBag.SetLink != null)
+                    {
+                        <a href="@ViewBag.SetLink" class="btn btn-primary">Activate</a>
+                    }
 
                     <div class="input-group ">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
@@ -38,10 +44,6 @@
         </div>
     </section>
 }
-
-
-
-
 
 
 <script>

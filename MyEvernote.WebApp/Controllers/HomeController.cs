@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
 
 namespace MyEvernote.WebApp.Controllers
@@ -61,8 +62,30 @@ namespace MyEvernote.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            //Giriş kontrolü ve yönlendirme 
-            //session akullanıcı bilgi saklama
+            if (ModelState.IsValid)
+            {
+                var eum = new EvernotUserManager();
+                var res = eum.LoginUSer(model);
+
+                if (res.Erros.Count > 0)
+                {
+
+                    if (res.Erros.Find(x => x.Code == ErrorMessageCode.UserIsNotActive) != null)
+                    {
+
+                        ViewBag.SetLink = "E-posta Gönder";
+                    }
+                    res.Erros.ForEach(x => ModelState.AddModelError("", x.Message));
+
+
+                    return View(model);
+                }
+
+                Session["login"] = res.Result;  // session akullanıcı bilgi saklama
+                return RedirectToAction("Index");  //yönlendirme
+
+            }
+
             return View();
         }
 
@@ -85,10 +108,12 @@ namespace MyEvernote.WebApp.Controllers
 
                 if (res.Erros.Count > 0)
                 {
-                    res.Erros.ForEach(x => ModelState.AddModelError("", x));
+                    res.Erros.ForEach(x => ModelState.AddModelError("", x.Message));
+
+
                     return View(model);
                 }
-                
+
                 //EvernoteUser user = null;
                 //try
                 //{

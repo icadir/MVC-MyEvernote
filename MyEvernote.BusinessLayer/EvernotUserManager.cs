@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyEvernote.DataAccessLayer.EntityFramework;
 using MyEvernote.Entities;
+using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
 
 namespace MyEvernote.BusinessLayer
@@ -12,6 +13,7 @@ namespace MyEvernote.BusinessLayer
     public class EvernotUserManager
     {
         private Repository<EvernoteUser> repo_user = new Repository<EvernoteUser>();
+
         public BusinessLayerResult<EvernoteUser> RegisterUser(RegisterViewModel data)
         {
             // kuallnıcı username kontroşü
@@ -19,18 +21,18 @@ namespace MyEvernote.BusinessLayer
             // kayit işlemi 
             // aktivasyon e-postası gönderimi
             var user = repo_user.Find(x => x.Username == data.Username || x.Email == data.Email);
-            var layerResult = new BusinessLayerResult<EvernoteUser>();
+            var res = new BusinessLayerResult<EvernoteUser>();
 
             if (user != null)
             {
                 if (user.Username == data.Username)
                 {
-                    layerResult.Erros.Add("Kullanıcı Adi Kayıtlı");
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExists, "Kullanıcı Adı Kayıtlı");
                 }
 
                 if (user.Email == data.Email)
                 {
-                    layerResult.Erros.Add("E-posta adresi kayıtlı");
+                    res.AddError(ErrorMessageCode.EmailAlreadyExists, "E-posta adresi kullanılıyor.");
                 }
             }
             else
@@ -40,7 +42,7 @@ namespace MyEvernote.BusinessLayer
                     Username = data.Username,
                     Email = data.Email,
                     Password = data.Password,
-                    ActivateGuid = Guid.NewGuid(),    
+                    ActivateGuid = Guid.NewGuid(),
                     IsActive = false,
                     IsAdmin = false,
 
@@ -48,7 +50,7 @@ namespace MyEvernote.BusinessLayer
 
                 if (dbResult > 0)
                 {
-                    layerResult.Result = repo_user.Find(x => x.Email == data.Email && x.Username == data.Username);
+                    res.Result = repo_user.Find(x => x.Email == data.Email && x.Username == data.Username);
 
                     //TODO : aktivasyon maili atılacak
                     //layerresult.activaGuid
@@ -56,7 +58,33 @@ namespace MyEvernote.BusinessLayer
                 }
             }
 
-            return layerResult;
+            return res;
+        }
+
+        public BusinessLayerResult<EvernoteUser> LoginUSer(LoginViewModel data)
+        {
+            // Giriş kontrolü 
+            // Hesap aktive edilmiş mi ?
+            var res = new BusinessLayerResult<EvernoteUser>();
+            res.Result = repo_user.Find(x => x.Username == data.Username && x.Email == data.Password);
+
+
+            if (res.Result != null)
+            {
+                if (!res.Result.IsActive)
+                {
+                    res.AddError(ErrorMessageCode.UserIsNotActive, "Kullanıcı Aktifleştirilmemiştir.");
+                    res.AddError(ErrorMessageCode.CheckYourEmail, "Lüsfen eposta adresinizi kontrol ediliz.");
+
+                }
+
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.UsernameOrPassWrong, "Kullanıcı adı yada sifre uyuşmuyor.");
+            }
+
+            return res;
         }
     }
 }
