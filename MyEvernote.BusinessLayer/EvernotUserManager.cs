@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyEvernote.Common.Helpers;
 using MyEvernote.DataAccessLayer.EntityFramework;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
+using MyEvernoteCommon.Helpers;
 
 namespace MyEvernote.BusinessLayer
 {
@@ -55,6 +57,12 @@ namespace MyEvernote.BusinessLayer
                     //TODO : aktivasyon maili atılacak
                     //layerresult.activaGuid
 
+                    string siteUri = ConfigHelper.Get<string>("SiteRoolUri");
+                    string activateUri = $"{siteUri}/Home/UserActivate/{res.Result.ActivateGuid}";
+                    string body =
+                        $"Merhaba{ res.Result.Username};<br><br>Hesabınızı aktifleştirmek için <a href='{activateUri}' target='_blank'>tıklayınız</a>.";
+                    MailHelper.SendMail(body, res.Result.Email, "MyEvernote Hesap Aktifleştirme");
+
                 }
             }
 
@@ -82,6 +90,29 @@ namespace MyEvernote.BusinessLayer
             else
             {
                 res.AddError(ErrorMessageCode.UsernameOrPassWrong, "Kullanıcı adı yada sifre uyuşmuyor.");
+            }
+
+            return res;
+        }
+
+        public BusinessLayerResult<EvernoteUser> ActivateUser(Guid activateId)
+        {
+            var res = new BusinessLayerResult<EvernoteUser>();
+            res.Result = repo_user.Find(x => x.ActivateGuid == activateId);
+            if (res.Result != null)
+            {
+                if (res.Result.IsAdmin)
+                {
+                    res.AddError(ErrorMessageCode.UserAlreadyActive, "Kullanıcı Aktive edilmiştir.");
+                    return res;
+                }
+
+                res.Result.IsAdmin = true;
+                repo_user.Update(res.Result);
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.ActivateIdDoesNotExist, "Aktifleştirilecek kullanıcı bulunamadi");
             }
 
             return res;

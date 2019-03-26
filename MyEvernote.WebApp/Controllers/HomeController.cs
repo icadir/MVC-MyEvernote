@@ -93,6 +93,7 @@ namespace MyEvernote.WebApp.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Register(RegisterViewModel model)
         {
@@ -161,11 +162,38 @@ namespace MyEvernote.WebApp.Controllers
             return View();
         }
 
-        public ActionResult UserActivate(Guid activate_id)
+        public ActionResult UserActivate(Guid id)
         {
-            // Kullanıcı aktivasyonu sağlanacak.
+            var eum = new EvernotUserManager();
+            var res = eum.ActivateUser(id);
+
+            if (res.Erros.Count > 0)
+            {
+                TempData["errors"] = res.Erros;
+                return RedirectToAction("UserActivateCancel");
+            }
+
+
+            return RedirectToAction("UserActivateOk");
+        }
+
+        public ActionResult UserActivateOk()
+        {
             return View();
         }
+
+        public ActionResult UserActivateCancel()
+        {
+            List<ErrorMessagaObj> errors = null;
+
+            if (TempData["errors"] != null)
+            {
+                errors = TempData["errors"] as List<ErrorMessagaObj>;
+            }
+
+            return View(errors);
+        }
+
         public ActionResult Logout()
         {
             Session.Clear();

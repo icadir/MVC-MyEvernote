@@ -9,9 +9,11 @@ namespace MyEvernoteCommon
 
     public class DefaultCommon : ICommon
     {
-        public string GetUsername()
+        public string GetCurrentUsername()
         {
             return "system";
         }
+
+        
     }
 }
