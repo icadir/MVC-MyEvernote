@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using MyEvernote.Entities
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -22,6 +23,16 @@
     <![endif]-->
 </head>
 <body>
+
+    @{
+        EvernoteUser user = null;
+        if (Session["login"] != null)
+        {
+            user = Session["login"] as EvernoteUser;
+
+        }
+    }
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -33,18 +44,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">My Evernote</a>
+                <a class="navbar-brand" href="/Home/Index">My Evernote</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-wrench"> </span>
-                            Yönetim
 
-                        </a>
-                    </li>
+                    @if (user != null)
+                    {
+                        <li>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-wrench"> </span>
+                                Yönetim
+
+                            </a>
+                        </li>
+                    }
+
                     <li>
                         <a href="/Home/MostLiked">
                             <span class="glyphicon glyphicon-star"> </span>
@@ -54,14 +70,14 @@
                     </li>
                     <li>
                         <a href="/Home/Index">
-                            <span class="glyphicon glyphicon-th-list">   </span>
+                            <span class="glyphicon glyphicon-th-list"> </span>
                             Son Yazılanlar
 
                         </a>
                     </li>
                     <li>
                         <a href="/Home/About">
-                            <span class="glyphicon glyphicon-info-sign">    </span>
+                            <span class="glyphicon glyphicon-info-sign"> </span>
                             Hakkımızda
 
                         </a>
@@ -69,34 +85,40 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-log-in"></span>
-                            Giriş
+                    @if (user == null)
+                    {
+                        <li>
+                            <a href="/Home/Login">
+                                <span class="glyphicon glyphicon-log-in"></span>
+                                Giriş
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-user">  </span>
-                            Üye Ol
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Register">
+                                <span class="glyphicon glyphicon-user"> </span>
+                                Üye Ol
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-user"> </span>
-                            İsmail Çadır
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="/Home/Profile">
+                                <span class="glyphicon glyphicon-user"> </span>
+                               @user.Username
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-log-out">   </span>
-                            Çıkış
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Home/Logout">
+                                <span class="glyphicon glyphicon-log-out"> </span>
+                                Çıkış
 
-                        </a>
-                    </li>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -115,12 +137,12 @@
                 <div class="col-lg-4 text-center">
                     <h4>
                         <p>Site Haritası</p>
-                     
+
                     </h4>
                     <hr />
                     <p>
                         <a href="#"><span class="glyphicon glyphicon-info-sign"></span>Hakkımızda</a><br />
-                        <a href="#"><span class="glyphicon glyphicon-star"></span>En Beğenilenler</a><br/>
+                        <a href="#"><span class="glyphicon glyphicon-star"></span>En Beğenilenler</a><br />
                         <a href="#"><span class="glyphicon glyphicon-th-list"></span>Son Yazılar</a>
                     </p>
                 </div>
