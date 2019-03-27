@@ -1,9 +1,5 @@
-﻿using System;
+﻿using MyEvernote.Entities.Messages;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyEvernote.Entities.Messages;
 
 namespace MyEvernote.BusinessLayer
 {

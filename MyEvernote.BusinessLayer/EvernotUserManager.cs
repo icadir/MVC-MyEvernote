@@ -69,12 +69,25 @@ namespace MyEvernote.BusinessLayer
             return res;
         }
 
+        public BusinessLayerResult<EvernoteUser> GetUserById(int id)
+        {
+            BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
+            res.Result = repo_user.Find(x => x.Id == id);
+
+            if (res.Result == null)
+            {
+                res.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı bulunamadı");
+            }
+
+            return res;
+        }
+
         public BusinessLayerResult<EvernoteUser> LoginUSer(LoginViewModel data)
         {
             // Giriş kontrolü 
             // Hesap aktive edilmiş mi ?
             var res = new BusinessLayerResult<EvernoteUser>();
-            res.Result = repo_user.Find(x => x.Username == data.Username && x.Email == data.Password);
+            res.Result = repo_user.Find(x => x.Username == data.Username && x.Password == data.Password);
 
 
             if (res.Result != null)

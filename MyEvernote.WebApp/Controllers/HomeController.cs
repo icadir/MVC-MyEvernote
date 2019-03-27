@@ -8,6 +8,7 @@ using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
+using MyEvernote.WebApp.ViewModels.BilgilendirmeSayfalari;
 
 namespace MyEvernote.WebApp.Controllers
 {
@@ -53,6 +54,43 @@ namespace MyEvernote.WebApp.Controllers
         {
             return View();
 
+        }
+
+        public ActionResult ShowProfile()
+        {
+            EvernoteUser currentUser = Session["login"] as EvernoteUser;
+
+            EvernotUserManager eum = new EvernotUserManager();
+
+            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+
+            if (res.Erros.Count > 0)
+            {
+                ErrorViewModel errornotifyObj = new ErrorViewModel()
+                {
+                    Tittle = "Hata Oluştu",
+                    Items = res.Erros,
+                };
+
+                return View("Error", errornotifyObj);
+            }
+
+            return View(res.Result);
+        }
+
+        public ActionResult EditProfile()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EditProfile(EvernoteUser user)
+        {
+            return View();
+        }
+
+        public ActionResult RemoveProfile()
+        {
+            return View();
         }
 
         public ActionResult Login()
@@ -151,16 +189,21 @@ namespace MyEvernote.WebApp.Controllers
                 //{
                 //    return View(model);
                 //}
-                return RedirectToAction("RegisterOk");
+                OkViewModel notifyObj = new OkViewModel()
+                {
+                    Tittle = "Kayıt Başarılı",
+                    RedirectingUrl = "/Home/Login",
+
+                };
+                notifyObj.Items.Add("Lütfen e-posta adresinize gönderdiğimiz aktivasyon link'ine tıklayarak hesabınızı aktive ediniz. Hesabınız aktive etmeden not ekleyemez ve beğenme yapamazsınız..");
+
+                return View("Ok", notifyObj);
             }
 
             return View(model);
         }
 
-        public ActionResult RegisterOk()
-        {
-            return View();
-        }
+
 
         public ActionResult UserActivate(Guid id)
         {
@@ -169,30 +212,27 @@ namespace MyEvernote.WebApp.Controllers
 
             if (res.Erros.Count > 0)
             {
-                TempData["errors"] = res.Erros;
-                return RedirectToAction("UserActivateCancel");
+                ErrorViewModel errornotifyObj = new ErrorViewModel()
+                {
+                    Tittle = "Geçersiz İşlem",
+                    Items = res.Erros,
+                };
+
+                return View("Error", errornotifyObj);
             }
 
-
-            return RedirectToAction("UserActivateOk");
-        }
-
-        public ActionResult UserActivateOk()
-        {
-            return View();
-        }
-
-        public ActionResult UserActivateCancel()
-        {
-            List<ErrorMessagaObj> errors = null;
-
-            if (TempData["errors"] != null)
+            OkViewModel okNotifyObj = new OkViewModel()
             {
-                errors = TempData["errors"] as List<ErrorMessagaObj>;
-            }
+                Tittle = "Hesap Aktifleştirildi.",
+                RedirectingUrl = "/Home/Login"
+            };
 
-            return View(errors);
+            okNotifyObj.Items.Add("Hesabınız Aktifleştirildi. Artık not Paylaşabilir ve beğenme yapabilirsiniz.");
+
+            return View("Ok", okNotifyObj);
         }
+
+
 
         public ActionResult Logout()
         {

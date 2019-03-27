@@ -22,6 +22,7 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
                 IsActive = true,
                 IsAdmin = true,
                 Username = "ismailcadir",
+                ProfileImageFilename = "user.jpg",
                 Password = "123456",
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now.AddMinutes(5),
@@ -39,6 +40,7 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
                 IsAdmin = false,
                 Username = "ismail2cadir2",
                 Password = "654321",
+                ProfileImageFilename = "user.jpg",
                 CreatedOn = DateTime.Now.AddHours(1),
                 ModifiedOn = DateTime.Now.AddMinutes(65),
                 ModifiedUsername = "ismailcadir"
@@ -52,6 +54,7 @@ namespace MyEvernote.DataAccessLayer.EntityFramework
                     Name = FakeData.NameData.GetFirstName(),
                     Surname = FakeData.NameData.GetSurname(),
                     Email = FakeData.NetworkData.GetEmail(),
+                    ProfileImageFilename = "user.jpg",
                     ActivateGuid = Guid.NewGuid(),
                     IsActive = true,
                     IsAdmin = false,

@@ -26,6 +26,9 @@ namespace MyEvernote.Entities
         [Required, StringLength(25)]
         public string Password { get; set; }
 
+        [StringLength(50)]// images/user_12.jpg
+        public string ProfileImageFilename { get; set; }
+
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
 
@@ -38,5 +41,6 @@ namespace MyEvernote.Entities
         public virtual List<Comment> Comments { get; set; }
         public virtual List<Liked> Likes { get; set; }
 
+       
     }
 }
