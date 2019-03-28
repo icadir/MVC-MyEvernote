@@ -103,30 +103,36 @@ namespace MyEvernote.WebApp.Controllers
         [HttpPost]
         public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
-            if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" ||
-                                         ProfileImage.ContentType == "image/jpg" ||
-                                         ProfileImage.ContentType == "image/png"))
+            ModelState.Remove("ModifiedUsername");
+            if (ModelState.IsValid)
             {
-                string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}";
-                ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
-                model.ProfileImageFilename = filename;
-            }
-
-            EvernotUserManager eum = new EvernotUserManager();
-            BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
-            if (res.Erros.Count > 0)
-            {
-                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" ||
+                                             ProfileImage.ContentType == "image/jpg" ||
+                                             ProfileImage.ContentType == "image/png"))
                 {
-                    Items = res.Erros,
-                    Tittle = "Profil Güncellenemedi",
-                    RedirectingUrl = "/Home/EditProfile"
-                };
-                return View("Error", errorNotifyObj);
+                    string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+                    ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                    model.ProfileImageFilename = filename;
+                }
+
+                EvernotUserManager eum = new EvernotUserManager();
+                BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
+                if (res.Erros.Count > 0)
+                {
+                    ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                    {
+                        Items = res.Erros,
+                        Tittle = "Profil Güncellenemedi",
+                        RedirectingUrl = "/Home/EditProfile"
+                    };
+                    return View("Error", errorNotifyObj);
+                }
+
+                Session["login"] = res.Result; // profil güncellendigi içinsession güncellendi.
+                return RedirectToAction("ShowProfile");
             }
 
-            Session["login"] = res.Result; // profil güncellendigi içinsession güncellendi.
-            return RedirectToAction("ShowProfile");
+            return View(model);
         }
 
         public ActionResult DeleteProfile()
