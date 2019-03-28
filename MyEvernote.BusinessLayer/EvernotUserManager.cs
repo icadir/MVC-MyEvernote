@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyEvernote.Common.Helpers;
+﻿using MyEvernote.Common.Helpers;
 using MyEvernote.DataAccessLayer.EntityFramework;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
 using MyEvernoteCommon.Helpers;
+using System;
 
 namespace MyEvernote.BusinessLayer
 {
@@ -134,7 +130,7 @@ namespace MyEvernote.BusinessLayer
 
         public BusinessLayerResult<EvernoteUser> UpdateProfile(EvernoteUser data)
         {
-            EvernoteUser db_user = repo_user.Find(x => x.Username == data.Username || x.Email == data.Email);
+            EvernoteUser db_user = repo_user.Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
             BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
 
             if (db_user != null && db_user.Id != data.Id)
@@ -170,5 +166,25 @@ namespace MyEvernote.BusinessLayer
 
             return res;
         }
+
+        public BusinessLayerResult<EvernoteUser> RemoveUserById(int id)
+        {
+            BusinessLayerResult<EvernoteUser> res = new BusinessLayerResult<EvernoteUser>();
+            EvernoteUser user = repo_user.Find(x => x.Id == id);
+            if (user != null)
+            {
+                if (repo_user.Delete(user) == 0)
+                {
+                    res.AddError(ErrorMessageCode.UserCouldNoteRemove, "Kullanıcı Silinemedi");
+                }
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.UserCoultNotFound, "Kullanıcı buluanamadı");
+            }
+
+            return res;
+        }
+
     }
 }

@@ -129,9 +129,25 @@ namespace MyEvernote.WebApp.Controllers
             return RedirectToAction("ShowProfile");
         }
 
-        public ActionResult RemoveProfile()
+        public ActionResult DeleteProfile()
         {
-            return View();
+            EvernoteUser currentUser = Session["loing"] as EvernoteUser;
+
+            EvernotUserManager eum = new EvernotUserManager();
+            BusinessLayerResult<EvernoteUser> res = eum.RemoveUserById(currentUser.Id);
+
+            if (res.Erros.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Items = res.Erros,
+                    Tittle = "Profile Silinemedi",
+                    RedirectingUrl = "/Home/ShowProfile"
+                };
+                return View("Error", errorNotifyObj);
+            }
+            Session.Clear();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Login()
