@@ -80,12 +80,53 @@ namespace MyEvernote.WebApp.Controllers
 
         public ActionResult EditProfile()
         {
-            return View();
+            EvernoteUser currentUser = Session["login"] as EvernoteUser;
+
+            EvernotUserManager eum = new EvernotUserManager();
+
+            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+
+            if (res.Erros.Count > 0)
+            {
+                ErrorViewModel errornotifyObj = new ErrorViewModel()
+                {
+                    Tittle = "Hata Oluştu",
+                    Items = res.Erros,
+                };
+
+                return View("Error", errornotifyObj);
+            }
+
+            return View(res.Result);
         }
+
         [HttpPost]
-        public ActionResult EditProfile(EvernoteUser user)
+        public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
-            return View();
+            if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" ||
+                                         ProfileImage.ContentType == "image/jpg" ||
+                                         ProfileImage.ContentType == "image/png"))
+            {
+                string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+                ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                model.ProfileImageFilename = filename;
+            }
+
+            EvernotUserManager eum = new EvernotUserManager();
+            BusinessLayerResult<EvernoteUser> res = eum.UpdateProfile(model);
+            if (res.Erros.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Items = res.Erros,
+                    Tittle = "Profil Güncellenemedi",
+                    RedirectingUrl = "/Home/EditProfile"
+                };
+                return View("Error", errorNotifyObj);
+            }
+
+            Session["login"] = res.Result; // profil güncellendigi içinsession güncellendi.
+            return RedirectToAction("ShowProfile");
         }
 
         public ActionResult RemoveProfile()
