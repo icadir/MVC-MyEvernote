@@ -108,7 +108,7 @@
                         <li>
                             <a href="/Home/ShowProfile">
                                 <span class="glyphicon glyphicon-user"> </span>
-                               @user.Username
+                                @user.Username
 
                             </a>
                         </li>
@@ -130,60 +130,6 @@
 
     @RenderBody();
 
-    <div class="container">
-        <hr>
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-4 text-center">
-                    <h4>
-                        <p>Site Haritası</p>
-
-                    </h4>
-                    <hr />
-                    <p>
-                        <a href="#"><span class="glyphicon glyphicon-info-sign"></span>Hakkımızda</a><br />
-                        <a href="#"><span class="glyphicon glyphicon-star"></span>En Beğenilenler</a><br />
-                        <a href="#"><span class="glyphicon glyphicon-th-list"></span>Son Yazılar</a>
-                    </p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <strong>
-                        MyEvernote
-                    </strong>
-                    <hr />
-                    <p>
-                        Tüm hakları saklıdır &copy;<br />
-                        MyEvernote @DateTime.Now
-                    </p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <h5>
-                        <strong>
-                            E-Bülten Üyeligi
-                        </strong>
-                    </h5>
-                    <hr />
-                    <div class="col-md-10 col-md-offset-1">
-                        <p>
-                            asşdaşsldmasşd şlamsdlşasmdşlasmd aşlsdmaşlsdmşalsdm asdşmasdşlamsşdlasdq şlqmweşl qweşlmqwşlemqwe şl
-                        </p>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="e-posta adresiniz" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <span class="glyphicon glyphicon-send"></span>
-                                    Gönder
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </footer>
-    </div>
-    <!-- /.container -->
-
+    @RenderSection("footer", required: false)
 </body>
 </html>
