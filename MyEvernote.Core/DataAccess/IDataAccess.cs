@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MyEvernote.DataAccessLayer.Abstract
+namespace MyEvernote.Core.DataAccess
 {
-    public interface IRepository<T>
+    public interface IDataAccess<T>
     {
          List<T> List();
          List<T> List(Expression<Func<T, bool>> where);

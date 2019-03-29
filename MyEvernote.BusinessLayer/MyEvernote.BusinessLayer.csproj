@@ -51,6 +51,7 @@
     <Compile Include="BusinessLayerResult.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="EvernotUserManager.cs" />
+    <Compile Include="ManagerBase.cs" />
     <Compile Include="NoteManager.cs" />
     <Compile Include="NoteManager.Designer.cs">
       <DependentUpon>NoteManager.cs</DependentUpon>
@@ -58,6 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyEvernote.Core\MyEvernote.Core.csproj">
+      <Project>{1ee92c22-3237-45fe-b572-92ccbf10948e}</Project>
+      <Name>MyEvernote.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyEvernote.DataAccessLayer\MyEvernote.DataAccessLayer.csproj">
       <Project>{f09e7ec0-8f82-4c2d-91d4-18aaa329b0cf}</Project>
       <Name>MyEvernote.DataAccessLayer</Name>
@@ -74,6 +79,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abstract\" />
+    <Folder Include="Results\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

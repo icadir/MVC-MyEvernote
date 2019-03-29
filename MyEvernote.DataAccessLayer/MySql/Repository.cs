@@ -4,11 +4,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using MyEvernote.DataAccessLayer.Abstract;
+using MyEvernote.Core.DataAccess;
+
 
 namespace MyEvernote.DataAccessLayer.MySql
 {
-    public class Repository<T> : RepositoryBase,IRepository<T> where T : class
+    public class Repository<T> : RepositoryBase,IDataAccess<T> where T : class
     {
         public List<T> List()
         {

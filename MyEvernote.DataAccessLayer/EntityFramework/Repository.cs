@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using MyEvernote.DataAccessLayer.Abstract;
+using MyEvernote.Core.DataAccess;
 using MyEvernote.Entities;
 using MyEvernoteCommon;
 
 namespace MyEvernote.DataAccessLayer.EntityFramework
 {
-    public class Repository<T> : RepositoryBase, IRepository<T> where T : class
+    public class Repository<T> : RepositoryBase, IDataAccess<T> where T : class
     {
 
         private DbSet<T> _objectSet;
