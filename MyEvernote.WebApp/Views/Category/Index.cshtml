@@ -1,57 +1,79 @@
 ﻿@model IEnumerable<MyEvernote.Entities.Category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kategoriler";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-10 col-lg-offset-1">
+        <h2>Kategoriler</h2>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedUsername)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedUsername)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+        <p>
+      
+            <a href="/Category/Create" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" > Create</span>
+            </a>
+        </p>
 
-</table>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedUsername)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedUsername)
+                    </td>
+                    <td>
+                        <a href="/Category/Edit/@item.Id" class="btn btn-warning btn-xs" title="Edit">
+                            <span class="glyphicon glyphicon-edit"> </span>
+                        </a>
+                        <a href="/Category/Details/@item.Id" class="btn btn-info btn-xs"  title="Edit">
+                            <span class="glyphicon glyphicon-search"> </span>
+                        </a>
+                        <a href="/Category/Delete/@item.Id" class="btn btn-danger btn-xs"  title="Edit">
+                            <span class="glyphicon glyphicon-trash"> </span>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+ 
+</div>

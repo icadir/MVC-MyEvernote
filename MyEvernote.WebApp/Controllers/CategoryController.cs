@@ -21,7 +21,6 @@ namespace MyEvernote.WebApp.Controllers
             return View(categoryManager.List());
         }
 
-
         public ActionResult Details(int? id)
         {
             if (id == null)
