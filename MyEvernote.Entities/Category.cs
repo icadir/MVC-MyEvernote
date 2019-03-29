@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace MyEvernote.Entities
     [Table("Categories")]
     public class Category : MyEntityBase
     {
-        [Required,StringLength(50)]
+        [DisplayName("Başlık"),
+            Required(ErrorMessage = "{0} isimli alanı gereklidir."),
+            StringLength(50, ErrorMessage = "{0}  alanı max. {1} karakter içermelidir.")]
         public string Title { get; set; }
 
-        [StringLength(150)]
+        [DisplayName("Açıklama"),
+            StringLength(150, ErrorMessage = "{0}  alanı max. {1} karakter içermelidir.")]
         public string Description { get; set; }
 
 
@@ -22,7 +26,7 @@ namespace MyEvernote.Entities
 
         public Category()
         {
-           Notes = new List<Note>();
+            Notes = new List<Note>();
         }
     }
 }
