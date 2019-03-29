@@ -1,7 +1,7 @@
 ﻿using MyEvernote.Entities.Messages;
 using System.Collections.Generic;
 
-namespace MyEvernote.BusinessLayer
+namespace MyEvernote.BusinessLayer.Result
 {
     public class BusinessLayerResult<T> where T : class
     {

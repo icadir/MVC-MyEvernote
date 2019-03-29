@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyEvernote.BusinessLayer;
+using MyEvernote.BusinessLayer.Result;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
@@ -14,6 +15,9 @@ namespace MyEvernote.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private NoteManager noteManager = new NoteManager();
+        private CategoryManager categoryManager = new CategoryManager();
+        private EvernotUserManager evernoteUserManager = new EvernotUserManager();
         // GET: Home
         public ActionResult Index()
         {
@@ -22,9 +26,8 @@ namespace MyEvernote.WebApp.Controllers
             //{
             //    return View(TempData["mm"] as List<Note>);
             //}
-            NoteManager nm = new NoteManager();
-
-            return View(nm.GetAllNote().OrderByDescending(x => x.ModifiedOn).ToList());
+         
+            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList());
             //return View(nm.GetAllNoteQueryable().OrderByDescending(x=>x.ModifiedOn).ToList());
         }
 
@@ -34,8 +37,8 @@ namespace MyEvernote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var cm = new CategoryManager();
-            var cat = cm.GetCategoryById(id.Value);
+           
+            var cat = categoryManager.Find(x=>x.Id==id.Value);
             if (cat == null)
             {
                 return HttpNotFound();
@@ -46,8 +49,8 @@ namespace MyEvernote.WebApp.Controllers
 
         public ActionResult MostLiked()
         {
-            NoteManager nm = new NoteManager();
-            return View("Index", nm.GetAllNote().OrderByDescending(x => x.LikeCount).ToList());
+         
+            return View("Index", noteManager.ListQueryable().OrderByDescending(x => x.LikeCount).ToList());
         }
 
         public ActionResult About()
@@ -60,9 +63,7 @@ namespace MyEvernote.WebApp.Controllers
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
 
-            EvernotUserManager eum = new EvernotUserManager();
-
-            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(currentUser.Id);
 
             if (res.Erros.Count > 0)
             {
@@ -82,9 +83,7 @@ namespace MyEvernote.WebApp.Controllers
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
 
-            EvernotUserManager eum = new EvernotUserManager();
-
-            BusinessLayerResult<EvernoteUser> res = eum.GetUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.GetUserById(currentUser.Id);
 
             if (res.Erros.Count > 0)
             {
@@ -139,8 +138,7 @@ namespace MyEvernote.WebApp.Controllers
         {
             EvernoteUser currentUser = Session["loing"] as EvernoteUser;
 
-            EvernotUserManager eum = new EvernotUserManager();
-            BusinessLayerResult<EvernoteUser> res = eum.RemoveUserById(currentUser.Id);
+            BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RemoveUserById(currentUser.Id);
 
             if (res.Erros.Count > 0)
             {
@@ -165,8 +163,8 @@ namespace MyEvernote.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var eum = new EvernotUserManager();
-                var res = eum.LoginUSer(model);
+
+                var res = evernoteUserManager.LoginUSer(model);
 
                 if (res.Erros.Count > 0)
                 {
@@ -205,8 +203,8 @@ namespace MyEvernote.WebApp.Controllers
             // aktivasyon e-postası gönderimi
             if (ModelState.IsValid)
             {
-                EvernotUserManager eum = new EvernotUserManager();
-                var res = eum.RegisterUser(model);
+
+                var res = evernoteUserManager.RegisterUser(model);
 
                 if (res.Erros.Count > 0)
                 {
@@ -266,12 +264,10 @@ namespace MyEvernote.WebApp.Controllers
             return View(model);
         }
 
-
-
         public ActionResult UserActivate(Guid id)
         {
-            var eum = new EvernotUserManager();
-            var res = eum.ActivateUser(id);
+
+            var res = evernoteUserManager.ActivateUser(id);
 
             if (res.Erros.Count > 0)
             {
@@ -294,8 +290,6 @@ namespace MyEvernote.WebApp.Controllers
 
             return View("Ok", okNotifyObj);
         }
-
-
 
         public ActionResult Logout()
         {

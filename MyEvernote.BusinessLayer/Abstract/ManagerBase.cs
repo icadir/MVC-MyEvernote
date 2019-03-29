@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyEvernote.BusinessLayer
+namespace MyEvernote.BusinessLayer.Abstract
 {
     public abstract class ManagerBase<T> : IDataAccess<T> where T : class
     {
