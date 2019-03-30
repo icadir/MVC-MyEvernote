@@ -91,6 +91,13 @@ namespace MyEvernote.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 //TODO : düzenlenecek
+                var res = evernotUserManager.Update(evernoteUser);
+
+                if (res.Erros.Count > 0)
+                {
+                    res.Erros.ForEach(x => ModelState.AddModelError("", x.Message));
+                    return View(evernoteUser);
+                }
                 return RedirectToAction("Index");
             }
             return View(evernoteUser);
