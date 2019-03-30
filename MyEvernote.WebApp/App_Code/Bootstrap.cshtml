@@ -27,3 +27,11 @@
         <span class="glyphicon glyphicon-@icon"> </span>@text
     </button>
 }
+
+@helper LinkMenu(string url = "", string icon = "", string text = "")
+{
+    <a href="@url">
+        <span class="glyphicon glyhicon-@icon">
+        </span>@text
+    </a>
+}
