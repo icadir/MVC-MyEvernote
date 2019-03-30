@@ -15,5 +15,6 @@ namespace MyEvernote.Entities.Messages
         ProfileCouldNotUpdated = 157,
         UserCouldNoteRemove = 158,
         UserCoultNotFound=159,
+        UserCouldNotInserted = 160,
     }
 }

@@ -37,7 +37,7 @@ namespace MyEvernote.BusinessLayer
             }
             else
             {
-                var dbResult = Insert(new EvernoteUser()
+                var dbResult = base.Insert(new EvernoteUser()
                 {
                     Username = data.Username,
                     Email = data.Email,
@@ -120,7 +120,7 @@ namespace MyEvernote.BusinessLayer
                 }
 
                 res.Result.IsAdmin = true;
-               Update(res.Result);
+                Update(res.Result);
             }
             else
             {
@@ -185,6 +185,40 @@ namespace MyEvernote.BusinessLayer
                 res.AddError(ErrorMessageCode.UserCoultNotFound, "Kullanıcı buluanamadı");
             }
 
+            return res;
+        }
+
+        //method overloding de deönüş tipini deiştiremedigimiz için method başına new yazarak dönüş tipini degiştirip hemde baseden gelen ınsert yerine bunu kullan diyerek method gizlemiş olduk.
+
+        public new BusinessLayerResult<EvernoteUser> Insert(EvernoteUser data)
+        {
+
+            var user = Find(x => x.Username == data.Username || x.Email == data.Email);
+            var res = new BusinessLayerResult<EvernoteUser>();
+            res.Result = data;
+            if (user != null)
+            {
+                if (user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExists, "Kullanıcı Adı Kayıtlı");
+                }
+
+                if (user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessageCode.EmailAlreadyExists, "E-posta adresi kullanılıyor.");
+                }
+            }
+            else
+            {
+                res.Result.ProfileImageFilename = "user.jpg";
+                res.Result.ActivateGuid = Guid.NewGuid();
+
+            if (base.Insert(res.Result) == 0)
+                {
+                    res.AddError(ErrorMessageCode.UserCouldNotInserted, "Kullanıcı Eklenemedi");
+                }
+
+            }
             return res;
         }
 
