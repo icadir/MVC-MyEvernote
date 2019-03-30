@@ -1,4 +1,5 @@
-﻿@model MyEvernote.Entities.Category
+﻿@using MyEvernote.WebApp
+@model MyEvernote.Entities.Category
 
 @{
     ViewBag.Title = "Delete";
@@ -64,14 +65,13 @@
             {
                 @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                <button type="submit" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    Delete
-                </button>
+                <div class="form-actions no-color">
+              
+                    @Bootstrap.Button("danger", string.Empty, "submit", "remove", " Delete")
 
-                @Html.ActionLink("Back to List", "Index", "Category", null, new { @class = "btn btn-default" })
-            </div>
+                    @Bootstrap.LinkButton("/Category/Index/", "default", string.Empty, string.Empty, "arrow-left", "Back to List")
+
+                </div>
             }
         </div>
     </div>

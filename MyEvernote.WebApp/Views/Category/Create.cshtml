@@ -1,4 +1,5 @@
-﻿@model MyEvernote.Entities.Category
+﻿@using MyEvernote.WebApp
+@model MyEvernote.Entities.Category
 
 @{
     ViewBag.Title = "Create";
@@ -43,12 +44,11 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-success">
-                            <span class="glyphicon glyphicon-level-up"></span>
-                            Create
-                        </button>
+                      
+                        @Bootstrap.Button("success", string.Empty, "submit", "level-up", " Create")
 
-                        @Html.ActionLink("Back to List", "Index", "Category", null, new { @class = "btn btn-default" })
+                        @Bootstrap.LinkButton("/Category/Index/", "default", string.Empty, string.Empty, "arrow-left", "Back to List")
+
 
                     </div>
                 </div>

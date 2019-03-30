@@ -1,8 +1,11 @@
-﻿@model IEnumerable<MyEvernote.Entities.Category>
+﻿@using MyEvernote.WebApp
+@model IEnumerable<MyEvernote.Entities.Category>
 
 @{
     ViewBag.Title = "Kategoriler";
 }
+
+
 
 <div class="row">
     <div class="col-md-10 col-lg-offset-1">
@@ -14,9 +17,9 @@
     <div class="col-md-10 col-md-offset-1">
 
         <p>
-      
+
             <a href="/Category/Create" class="btn btn-primary">
-                <span class="glyphicon glyphicon-plus" > Create</span>
+                <span class="glyphicon glyphicon-plus"> Create</span>
             </a>
         </p>
 
@@ -59,15 +62,10 @@
                         @Html.DisplayFor(modelItem => item.ModifiedUsername)
                     </td>
                     <td>
-                        <a href="/Category/Edit/@item.Id" class="btn btn-warning btn-xs" title="Edit">
-                            <span class="glyphicon glyphicon-edit"> </span>
-                        </a>
-                        <a href="/Category/Details/@item.Id" class="btn btn-info btn-xs"  title="Edit">
-                            <span class="glyphicon glyphicon-search"> </span>
-                        </a>
-                        <a href="/Category/Delete/@item.Id" class="btn btn-danger btn-xs"  title="Edit">
-                            <span class="glyphicon glyphicon-trash"> </span>
-                        </a>
+
+                        @Bootstrap.LinkButton("/Category/Edit/" + @item.Id, "warning", "btn-xs", "Edit", "edit", string.Empty)
+                        @Bootstrap.LinkButton("/Category/Details/" + @item.Id, "info", "btn-xs", "Details", "search", string.Empty)
+                        @Bootstrap.LinkButton("/Category/Delete/" + @item.Id, "danger", "btn-xs", "Delete", "trash", string.Empty)
 
                     </td>
                 </tr>
@@ -75,5 +73,5 @@
 
         </table>
     </div>
- 
+
 </div>
