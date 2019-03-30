@@ -13,7 +13,7 @@ namespace MyEvernote.BusinessLayer.Abstract
     public abstract class ManagerBase<T> : IDataAccess<T> where T : class
     {
         private Repository<T> repo = new Repository<T>();
-
+       
         public virtual int Delete(T obj)
         {
             return repo.Delete(obj);

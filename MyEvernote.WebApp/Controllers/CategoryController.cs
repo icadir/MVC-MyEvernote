@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using MyEvernote.BusinessLayer;
+﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
-
+using MyEvernote.WebApp.Models;
+using System.Net;
+using System.Web.Mvc;
 
 namespace MyEvernote.WebApp.Controllers
 {
@@ -52,6 +46,7 @@ namespace MyEvernote.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 categoryManager.Insert(category);
+                CacheHelper.RemoveCategoriesFromCache();
                 return RedirectToAction("Index");
             }
 
@@ -87,8 +82,8 @@ namespace MyEvernote.WebApp.Controllers
                 Category cat = categoryManager.Find(x => x.Id == category.Id);
                 cat.Title = category.Title;
                 cat.Description = category.Description;
-                    
                 categoryManager.Update(category);
+                CacheHelper.RemoveCategoriesFromCache();
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -116,6 +111,8 @@ namespace MyEvernote.WebApp.Controllers
         {
             Category category = categoryManager.Find(x => x.Id == id);
             categoryManager.Delete(category);
+            CacheHelper.RemoveCategoriesFromCache();
+
             return RedirectToAction("Index");
         }
     }
