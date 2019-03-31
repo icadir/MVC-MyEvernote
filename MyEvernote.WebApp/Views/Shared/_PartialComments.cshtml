@@ -20,10 +20,13 @@
                 <span class="col-md-10" id="comment_text_@item.Id" contenteditable="false">
                     @item.Text
                 </span>
-
+            </div>
+            <br />
+            <br />
+            <div>
                 @if (user != null && user.Id == item.Owner.Id)
                 {
-                    <span class="col-md-2 text-right">
+                    <span class="col-md-2 text-left">
                         <button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="doComment(this,'edit_clicked',@item.Id,'#comment_text_@item.Id');">
                             <span class="glyphicon glyphicon-edit"></span>
                         </button>
@@ -32,12 +35,12 @@
                         </button>
                     </span>
                 }
-
                 <small class="col-md-12 text-right">
                     <span class="glyphicon glyphicon-time"></span> @item.ModifiedOn &nbsp;&nbsp;&nbsp;&nbsp;
                     <span class="glyphicon glyphicon-user"></span> @item.Owner.Username
                 </small>
             </div>
+
         </div>
     </div>
 }
