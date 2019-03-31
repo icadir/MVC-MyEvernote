@@ -79,15 +79,13 @@
                                     <p>  @note.Text</p>
                                 }
 
-
-
                                 </div>
                                 <div>
                                     <hr />
                                 </div>
                                 <div class="ratings">
                                     <p class="pull-right">
-                                        <button class="btn btn-default  btn-sm">
+                                        <button class="btn btn-default  btn-sm " data-toggle="modal" data-target="#modal_comment" data-note-id="@note.Id">
                                             <span class="glyphicon glyphicon-comment"></span> Yorumlar
                                         </button>
                                     </p>
@@ -100,9 +98,6 @@
                             </div>
                         </div>
                     }
-
-
-
             </div>
         </div>
     </div>
@@ -111,3 +106,23 @@
 @section footer{
     @Html.Partial("_PartialFooter")
 }
+
+@Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
+
+<script>
+
+    var modalCommentBodyId = "#modal_comment_body";
+
+
+    $(function () {
+
+        $('#modal_comment').on('show.bs.modal', function (e) {
+
+            var btn = $(e.relatedTarget);
+            noteid = btn.data("note-id");
+
+            $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteid);
+        })
+
+    });
+</script>
