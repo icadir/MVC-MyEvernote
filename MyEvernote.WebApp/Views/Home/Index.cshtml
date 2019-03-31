@@ -191,10 +191,29 @@
                 url: "/Comment/Delete/" + commentid,
             }).done(function (data) {
                 if (data.result) {
-                            //yorumlar partial tekrar yüklenir.
+                    //yorumlar partial tekrar yüklenir.
                     $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteid);
                 } else {
                     alert("Yorum Silinemedi.");
+                }
+            }).fail(function () {
+                alert("Sunucu ile baglantı kurulamadı..");
+            });
+        } else if (e === "new_clicked") {
+
+            var txt = $("#new_comment_text").val();
+
+            $.ajax({
+                method: "POST",
+                url: "/Comment/Create",
+                data: { text: txt, "noteid": noteid }
+            }).done(function (data) {
+
+                if (data.result) {
+                    //yorumlar partial tekrar yüklenir.
+                    $(modalCommentBodyId).load("/Comment/ShowNoteComments/" + noteid);
+                } else {
+                    alert("Yorum Eklenemedi.");
                 }
             }).fail(function () {
                 alert("Sunucu ile baglantı kurulamadı..");
