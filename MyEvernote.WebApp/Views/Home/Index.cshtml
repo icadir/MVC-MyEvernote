@@ -51,54 +51,47 @@
                             <img src="http://placehold.it/320x150" alt="@note.Title">
                             <div class="caption">
                                 <h4>
-                                    <a href="#">
+                                    <a href="#" data-toggle="modal" data-target="#modal_notedetail" data-note-id="@note.Id">
                                         @note.Title
                                     </a>
                                 </h4>
                                 <h6 class="text-right">
                                     @note.Owner.Username <span class="glyphicon glyphicon-user"></span><br />
                                     @note.ModifiedOn.ToString("dd.MM.yy HH:mm") <span class="glyphicon glyphicon-time"></span>
-
                                 </h6>
-                                <p>
-                                    @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 40)
-                                    {
-                                    <p>  @(note.Text.Substring(0, 40) + "....")</p>
+
+                                @if (string.IsNullOrEmpty(note.Text) == false && note.Text.Length > 70)
+                                {
+                                    <p>@(note.Text.Substring(0, 25) + "...")</p>
                                     <p class="pull-right">
-                                        <a href="#" class="btn btn-default btn-sm">
-                                            devamı...
-                                            <span class="glyphicon glyphicon-chevron-right">
-
-                                            </span>
-                                        </a>
+                                        <a href="#" data-toggle="modal" data-target="#modal_notedetail" data-note-id="@note.Id" class="btn btn-default btn-sm">devamı <span class="glyphicon glyphicon-chevron-right"></span></a>
                                     </p>
-
                                 }
                                 else
                                 {
-                                    <p>  @note.Text</p>
+                                    <p>@note.Text</p>
                                 }
 
-                                </div>
-                                <div>
-                                    <hr />
-                                </div>
-                                <div class="ratings">
-                                    <p class="pull-right">
-                                        <button class="btn btn-default  btn-sm " data-toggle="modal" data-target="#modal_comment" data-note-id="@note.Id">
-                                            <span class="glyphicon glyphicon-comment"></span> Yorumlar
-                                        </button>
-                                    </p>
-                                    <p>
-                                        <button class="btn btn-default btn-sm" type="button" data-liked="false" data-note-id="@note.Id">
-                                            <span class="glyphicon glyphicon-star-empty like-star"></span>&nbsp;
-                                            <span class="like-count">@note.LikeCount</span>
-                                        </button>
-                                    </p>
-                                </div>
+                            </div>
+                            <div>
+                                <hr />
+                            </div>
+                            <div class="ratings">
+                                <p class="pull-right">
+                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal_comment" data-note-id="@note.Id">
+                                        <span class="glyphicon glyphicon-comment"></span> Yorumlar
+                                    </button>
+                                </p>
+                                <p>
+                                    <button class="btn btn-default btn-sm" type="button" data-liked="false" data-note-id="@note.Id">
+                                        <span class="glyphicon glyphicon-star-empty like-star"></span>&nbsp;
+                                        <span class="like-count">@note.LikeCount</span>
+                                    </button>
+                                </p>
                             </div>
                         </div>
-                    }
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -109,6 +102,8 @@
 }
 
 @Bootstrap.ModalPopup(id: "modal_comment", title: "Yorumlar")
+@Bootstrap.ModalPopup(id: "modal_notedetail", title: "Not Detayı")
 
 <script src="~/Scripts/comment.js"></script>
 <script src="~/Scripts/like.js"></script>
+<script src="~/Scripts/NoteDetailPopup.js"></script>

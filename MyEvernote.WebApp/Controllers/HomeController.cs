@@ -28,7 +28,7 @@ namespace MyEvernote.WebApp.Controllers
             //    return View(TempData["mm"] as List<Note>);
             //}
 
-            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList());
+            return View(noteManager.ListQueryable().Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList());
             //return View(nm.GetAllNoteQueryable().OrderByDescending(x=>x.ModifiedOn).ToList());
         }
 
@@ -39,13 +39,16 @@ namespace MyEvernote.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var cat = categoryManager.Find(x => x.Id == id.Value);
-            if (cat == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View("Index", cat.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
+            //var cat = categoryManager.Find(x => x.Id == id.Value);
+            //List<Note> Notes = cat.Notes.Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList()
+            //if (cat == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            List<Note> notes = noteManager.ListQueryable()
+                .Where(x => x.IsDraft == false && x.CategoryId == id)
+                .OrderByDescending(X => X.ModifiedOn).ToList();
+            return View("Index", notes);
         }
 
         public ActionResult MostLiked()
@@ -127,7 +130,7 @@ namespace MyEvernote.WebApp.Controllers
                     };
                     return View("Error", errorNotifyObj);
                 }
-// profil güncellendigi içinsession güncellendi.
+                // profil güncellendigi içinsession güncellendi.
                 CurrentSession.Set<EvernoteUser>("login", res.Result);
                 return RedirectToAction("ShowProfile");
             }
@@ -137,7 +140,7 @@ namespace MyEvernote.WebApp.Controllers
 
         public ActionResult DeleteProfile()
         {
-         
+
 
             BusinessLayerResult<EvernoteUser> res = evernoteUserManager.RemoveUserById(CurrentSession.User.Id);
 
