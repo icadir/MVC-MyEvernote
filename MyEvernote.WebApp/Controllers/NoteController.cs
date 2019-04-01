@@ -1,5 +1,6 @@
 ﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEvernote.WebApp.Filters;
 using MyEvernote.WebApp.Models;
 using System.Collections.Generic;
 using System.Data;
@@ -16,7 +17,7 @@ namespace MyEvernote.WebApp.Controllers
         private NoteManager noteManager = new NoteManager();
         private CategoryManager categoryManager = new CategoryManager();
         private LikedManager likedManager = new LikedManager();
-
+        [Auth]
         public ActionResult Index()
         {
 
@@ -26,7 +27,7 @@ namespace MyEvernote.WebApp.Controllers
 
             return View(notes.ToList());
         }
-
+        [Auth]
         public ActionResult MyLikeNotes()
         {
             var notes = likedManager.ListQueryable().Include("LikedUser").Include("Note")
@@ -36,7 +37,7 @@ namespace MyEvernote.WebApp.Controllers
 
             return View("Index", notes.ToList());
         }
-
+        [Auth]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,13 +52,13 @@ namespace MyEvernote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(categoryManager.List(), "Id", "Title");
             return View();
         }
-
+        [Auth]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Note note)
@@ -77,7 +78,7 @@ namespace MyEvernote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,7 +94,7 @@ namespace MyEvernote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Note note)
@@ -116,7 +117,7 @@ namespace MyEvernote.WebApp.Controllers
             ViewBag.CategoryId = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title", note.CategoryId);
             return View(note);
         }
-
+        [Auth]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -131,7 +132,7 @@ namespace MyEvernote.WebApp.Controllers
             return View(note);
         }
 
-
+        [Auth]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -209,7 +210,7 @@ namespace MyEvernote.WebApp.Controllers
                 return HttpNotFound();
             }
 
-            return PartialView("_PartialNoteText",note);
+            return PartialView("_PartialNoteText", note);
         }
     }
 }

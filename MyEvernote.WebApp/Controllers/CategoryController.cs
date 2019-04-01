@@ -1,11 +1,13 @@
 ﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEvernote.WebApp.Filters;
 using MyEvernote.WebApp.Models;
 using System.Net;
 using System.Web.Mvc;
 
 namespace MyEvernote.WebApp.Controllers
 {
+    [Auth]
     public class CategoryController : Controller
     {
         private CategoryManager categoryManager = new CategoryManager();

@@ -1,5 +1,6 @@
 ﻿using MyEvernote.BusinessLayer;
 using MyEvernote.Entities;
+using MyEvernote.WebApp.Filters;
 using MyEvernote.WebApp.Models;
 using System.Data.Entity;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace MyEvernote.WebApp.Controllers
             return PartialView("_PartialComments", note.Comments);
         }
 
+        [Auth]
         [HttpPost]
         public ActionResult Edit(int? id, string text)
         {
@@ -54,7 +56,7 @@ namespace MyEvernote.WebApp.Controllers
             return Json(new { result = false }, JsonRequestBehavior.AllowGet);
 
         }
-
+        [Auth]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -73,9 +75,9 @@ namespace MyEvernote.WebApp.Controllers
             }
             return Json(new { result = false }, JsonRequestBehavior.AllowGet);
         }
-
+        [Auth]
         [HttpPost]
-        public ActionResult Create(Comment comment,int? noteid)
+        public ActionResult Create(Comment comment, int? noteid)
         {
             ModelState.Remove("CreateOn");
             ModelState.Remove("ModifiedOn");

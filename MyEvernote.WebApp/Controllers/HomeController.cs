@@ -9,6 +9,7 @@ using MyEvernote.BusinessLayer.Result;
 using MyEvernote.Entities;
 using MyEvernote.Entities.Messages;
 using MyEvernote.Entities.ValueObjects;
+using MyEvernote.WebApp.Filters;
 using MyEvernote.WebApp.Models;
 using MyEvernote.WebApp.ViewModels.BilgilendirmeSayfalari;
 
@@ -62,7 +63,7 @@ namespace MyEvernote.WebApp.Controllers
             return View();
 
         }
-
+        [Auth]
         public ActionResult ShowProfile()
         {
 
@@ -102,7 +103,7 @@ namespace MyEvernote.WebApp.Controllers
 
             return View(res.Result);
         }
-
+        [Auth]
         [HttpPost]
         public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
@@ -137,7 +138,7 @@ namespace MyEvernote.WebApp.Controllers
 
             return View(model);
         }
-
+        [Auth]
         public ActionResult DeleteProfile()
         {
 
@@ -162,6 +163,7 @@ namespace MyEvernote.WebApp.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
