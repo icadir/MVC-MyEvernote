@@ -303,5 +303,11 @@ namespace MyEvernote.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
     }
 }

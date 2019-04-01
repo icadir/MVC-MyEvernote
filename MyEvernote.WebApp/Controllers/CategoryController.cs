@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace MyEvernote.WebApp.Controllers
 {
     [Auth]
+    [AuthAdmin]
     public class CategoryController : Controller
     {
         private CategoryManager categoryManager = new CategoryManager();
