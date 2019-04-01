@@ -15,6 +15,7 @@ using MyEvernote.WebApp.ViewModels.BilgilendirmeSayfalari;
 
 namespace MyEvernote.WebApp.Controllers
 {
+    [Exc]
     public class HomeController : Controller
     {
         private NoteManager noteManager = new NoteManager();
@@ -307,7 +308,10 @@ namespace MyEvernote.WebApp.Controllers
         {
             return View();
         }
-
+        public ActionResult HasError()
+        {
+            return View();
+        }
 
     }
 }

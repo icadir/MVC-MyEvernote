@@ -15,6 +15,7 @@ namespace MyEvernote.WebApp.Controllers
 {
     [Auth]
     [AuthAdmin]
+    [Exc]
     public class EvernoteUserController : Controller
     {
         private EvernotUserManager evernotUserManager = new EvernotUserManager();

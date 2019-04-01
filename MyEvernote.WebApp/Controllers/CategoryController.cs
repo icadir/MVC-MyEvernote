@@ -9,6 +9,7 @@ namespace MyEvernote.WebApp.Controllers
 {
     [Auth]
     [AuthAdmin]
+    [Exc]
     public class CategoryController : Controller
     {
         private CategoryManager categoryManager = new CategoryManager();

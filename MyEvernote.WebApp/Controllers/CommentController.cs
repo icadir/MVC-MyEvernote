@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MyEvernote.WebApp.Controllers
 {
+    [Exc]
     public class CommentController : Controller
     {
         private NoteManager noteManager = new NoteManager();

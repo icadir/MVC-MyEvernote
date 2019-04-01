@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MyEvernote.WebApp.Controllers
 {
+    [Exc]
     public class NoteController : Controller
     {
 
