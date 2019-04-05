@@ -35,3 +35,6 @@ Eğitim Amaçlı Çalışma
  - EntityFramework Code First
  - AAA (Authentication Authorization and Accounting)
  - Bootstrap,Jquery,Ajax
+
+
+BU Proje Eğitim İçin Hazırlanmış Olup Ticari Bir Degeri Yoktur.
