@@ -1,6 +1,6 @@
 # MyEvernote Uygulaması
 
-Eğitim Amaçlı Çalışma
+Eğitim Amaçlı Çalışmamadır.
 =========================
 > - Authentication & Authorized Yönetiminin olduğu,
 > - Note oluşturma. Notlara yorum yazma ve notu beğenme işlemleri.
