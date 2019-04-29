@@ -5,8 +5,9 @@ Eğitim Amaçlı Çalışmadır.
 > - Authentication & Authorized Yönetiminin olduğu,
 > - Note oluşturma. Notlara yorum yazma ve notu beğenme işlemleri.
 > - Note ile ilgili CRUD işlemleri
-> - Oluşturulan notların, oluşturan kişi tarafından takibi.
-> - Button Helper Kullanımı
+> - E-mail ile Bilgilendirme.
+> - Oluşturulan notların takibi.
+> - Custom Helper Kullanımı(Projede Button ve link için kullanıldı.)
 
 
 ----------
